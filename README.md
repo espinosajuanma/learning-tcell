@@ -16,10 +16,10 @@ So I am going to have all at root level and probably make a sub-directory to tak
 
 These are some of the challenges I'll be trying to achieve.
 
-- Say `Hello World` on Full Screen
+- [x] Say `Hello World` on Full Screen
   - Center it
-- Use `q` to back to the terminal
-  - Disable `Ctrl + C`
+- [x] Use `q` to back to the terminal
+  - [x] Disable `Ctrl + C` -> There is no need to disable it
 - Print a "pop-up" in the middle of screen
 - Print two panes vertical
   - One white, the other magenta
