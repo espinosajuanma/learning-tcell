@@ -12,23 +12,15 @@ func print(s tcell.Screen, text string, coord []int, style tcell.Style) {
 	}
 }
 
-func printHelloWorld(s tcell.Screen, style tcell.Style) {
-	// This is stupid, but is clearer to understand than a loop
-
-	s.SetContent(0, 0, 'H', nil, style)
-	s.SetContent(1, 0, 'e', nil, style)
-	s.SetContent(2, 0, 'l', nil, style)
-	s.SetContent(3, 0, 'l', nil, style)
-	s.SetContent(4, 0, 'o', nil, style)
-	s.SetContent(5, 0, ' ', nil, style)
-	s.SetContent(6, 0, 'W', nil, style)
-	s.SetContent(7, 0, 'o', nil, style)
-	s.SetContent(8, 0, 'r', nil, style)
-	s.SetContent(9, 0, 'l', nil, style)
-	s.SetContent(10, 0, 'd', nil, style)
-	s.SetContent(11, 0, '!', nil, style)
-
-	s.SetContent(0, 1, 'H', []rune{'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!'}, style)
+func printMiddle(s tcell.Screen, text string) {
+	style := tcell.Style.Background(tcell.StyleDefault, tcell.ColorGreen).Foreground(tcell.ColorBlack)
+	w, h := s.Size()
+	len := len(text)
+	x := (w / 2) - (len / 2)
+	y := h / 2
+	for i, c := range text {
+		s.SetContent(x+i, y, c, nil, style)
+	}
 }
 
 func main() {
@@ -43,8 +35,7 @@ func main() {
 	}
 	s.SetStyle(style)
 	s.Clear()
-	printHelloWorld(s, style)
-	print(s, "Hello World!", []int{0, 2}, style)
+	printMiddle(s, "Hello World!")
 
 	quit := func() {
 		maybePanic := recover()

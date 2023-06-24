@@ -17,7 +17,7 @@ So I am going to have all at root level and probably make a sub-directory to tak
 These are some of the challenges I'll be trying to achieve.
 
 - [x] Say `Hello World` on Full Screen
-  - Center it
+  - [x] Center it
 - [x] Use `q` to back to the terminal
   - [x] Disable `Ctrl + C` -> There is no need to disable it
 - Print a "pop-up" in the middle of screen
