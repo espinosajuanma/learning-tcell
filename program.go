@@ -1,6 +1,10 @@
 package main
 
-import "github.com/gdamore/tcell/v2"
+import (
+	"fmt"
+
+	"github.com/gdamore/tcell/v2"
+)
 
 type Mode string
 
@@ -59,15 +63,34 @@ func (p *Program) Update() {
 		p.PrintMode()
 		p.Screen.Show()
 		ev := p.Screen.PollEvent()
-		switch ev := ev.(type) {
-		case *tcell.EventKey:
-			if ev.Rune() == 'q' && p.Mode == NormalMode {
+		if p.Mode == NormalMode {
+			err := p.HandleNormalEvents(ev)
+			if err != nil {
 				return
-			} else if ev.Rune() == ':' && p.Mode == NormalMode {
-				p.SetMode(CommandMode)
-			} else if ev.Key() == tcell.KeyEsc && p.Mode == CommandMode {
-				p.SetMode(NormalMode)
 			}
+		} else if p.Mode == CommandMode {
+			p.HandleCommandEvents(ev)
+		}
+	}
+}
+
+func (p *Program) HandleNormalEvents(ev tcell.Event) error {
+	switch ev := ev.(type) {
+	case *tcell.EventKey:
+		if ev.Rune() == 'q' {
+			return fmt.Errorf("quit")
+		} else if ev.Rune() == ':' {
+			p.SetMode(CommandMode)
+		}
+	}
+	return nil
+}
+
+func (p *Program) HandleCommandEvents(ev tcell.Event) {
+	switch ev := ev.(type) {
+	case *tcell.EventKey:
+		if ev.Key() == tcell.KeyEsc {
+			p.SetMode(NormalMode)
 		}
 	}
 }
